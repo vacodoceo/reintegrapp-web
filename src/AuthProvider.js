@@ -27,7 +27,7 @@ const AuthProvider = ({ children }) => {
   }, []);
 
   if (!showChild) {
-    return <Loading />;
+    return <Loading fullHeight />;
   } else {
     return (
       <firebaseAuth.Provider

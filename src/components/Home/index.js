@@ -7,7 +7,7 @@ import { firebaseAuth } from '../../AuthProvider';
 const Home = () => {
   const { user } = React.useContext(firebaseAuth);
 
-  if (user.role === 1) return <UserDashboard uid={user.uid} />;
+  if (user.role === 1) return <UserDashboard user={user} />;
   else {
     return <AdminDashboard />;
   }

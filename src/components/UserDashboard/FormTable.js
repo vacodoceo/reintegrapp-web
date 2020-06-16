@@ -106,7 +106,7 @@ const FormTable = ({ user }) => {
       width: '15%',
     },
     {
-      title: 'Verified',
+      title: 'Verificado',
       dataIndex: 'verified',
       filters: [
         { text: 'Sí', value: true },

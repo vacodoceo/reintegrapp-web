@@ -1,52 +1,52 @@
 .tab-content-wrapper {
-    padding: 24px;
-    display: flex;
-    justify-content: center;
+  padding: 24px;
+  display: flex;
+  justify-content: center;
 }
 
 .organization-data-form {
-    width: 720px;
-    button {
-        width: 100%;
-    }
+  width: 720px;
+  button {
+    width: 100%;
+  }
 }
 
 .form-dynamic-nest-space {
-    div.ant-space-item {
-        flex-grow: 1;
-    }
+  div.ant-space-item {
+    flex-grow: 1;
+  }
 
-    div.ant-space-item:last-child {
-        display: flex;
-        align-items: center;
-        flex-grow: 0;
-        height: 32px;
-        width: 32px;
-        span {
-            height: 24px;
-            width: 24px;
-            svg {
-                height: 24px;
-                width: 24px;
-            }
-        }
+  div.ant-space-item:last-child {
+    display: flex;
+    align-items: center;
+    flex-grow: 0;
+    height: 32px;
+    width: 32px;
+    span {
+      height: 24px;
+      width: 24px;
+      svg {
+        height: 24px;
+        width: 24px;
+      }
     }
+  }
 }
 
 .ant-table-wrapper.colaborators-table {
-    margin-top: 24px;
+  margin-top: 24px;
 }
 
 .ant-descriptions-item-label,
 .ant-descriptions-item-content {
-    border-bottom: 1px solid rgba(128, 128, 128, 0.1);
+  border-bottom: 1px solid rgba(128, 128, 128, 0.1);
 }
 
 .ant-descriptions-row:last-child .ant-descriptions-item-label,
 .ant-descriptions-row:last-child .ant-descriptions-item-content {
-    border-bottom: 0;
+  border-bottom: 0;
 }
 
 .select-assign-colaborator {
-    width: 100%;
+  width: 100%;
 }

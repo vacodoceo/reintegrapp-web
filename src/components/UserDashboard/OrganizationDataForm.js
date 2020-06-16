@@ -2,12 +2,10 @@ import React from 'react';
 import { Button, Form, Input, message, Space } from 'antd';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 
-import { firebaseAuth } from '../../AuthProvider';
 import firebase from '../../firebase';
 import './UserDashboard.scss';
 
-const OrganizationDataForm = () => {
-  const { user } = React.useContext(firebaseAuth);
+const OrganizationDataForm = ({ user }) => {
   const [loading, setLoading] = React.useState(false);
 
   const { name, areas } = user;
@@ -31,7 +29,7 @@ const OrganizationDataForm = () => {
       })
       .then(() => {
         setLoading(false);
-        message.info('¡Información actualizada exitósamente!');
+        message.success('¡Información actualizada exitósamente!');
       })
       .catch(() => {
         setLoading(false);

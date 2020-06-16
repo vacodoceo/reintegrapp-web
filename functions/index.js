@@ -64,6 +64,7 @@ exports.createUser = functions.https.onCall(async (data, context) => {
     .collection('users')
     .doc(newUserUid)
     .set({
+      username,
       role: newRole,
       basalFormId,
       dailyFormId,

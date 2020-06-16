@@ -6,12 +6,10 @@ import DailyTable from './DailyTable';
 import FormTable from './FormTable';
 import Loading from '../Loading';
 import OrganizationDataForm from './OrganizationDataForm';
-import { firebaseAuth } from '../../AuthProvider';
 
 const { TabPane } = Tabs;
 
-const UserDashboard = () => {
-  const { user } = React.useContext(firebaseAuth);
+const UserDashboard = ({ user }) => {
   const formsDisabled = !user.name;
   const defaultKey = formsDisabled ? '4' : '1';
 
