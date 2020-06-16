@@ -50,3 +50,23 @@
 .select-assign-colaborator {
   width: 100%;
 }
+
+.colaborators-form-space .ant-space-item {
+  width: 30%;
+}
+
+.colaborators-form-space .ant-space-item:last-child {
+  width: auto;
+
+  span {
+    height: 32px;
+    width: 32px;
+    display: flex;
+    align-items: center;
+
+    svg {
+      height: 24px;
+      width: 24px;
+    }
+  }
+}

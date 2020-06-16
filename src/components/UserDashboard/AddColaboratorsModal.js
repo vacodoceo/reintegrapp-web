@@ -1,19 +1,28 @@
 import React from 'react';
-import { Button, Form, Input, message, Modal, Space } from 'antd';
+import { Button, Form, Input, message, Modal, Select, Space } from 'antd';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 
 import { createColaborators } from '../../services/colaborators';
 
+const { Option } = Select;
+
 const AddColaboratorsModal = ({ visible, setVisible, user }) => {
   const [form] = Form.useForm();
   const [loading, setLoading] = React.useState(false);
+  const areas = Object.keys(user.areas).sort();
 
   const handleAddColaborators = ({ colaborators }) => {
-    const namesArray = colaborators.map((c) => c.name);
+    const colaboratorsObject = {};
+    colaborators.forEach((c) => {
+      colaboratorsObject[c.name] = {
+        area: c.area,
+        phone: c.phone,
+      };
+    });
     const hide = message.loading('Subiendo colaboradores...', 0);
     setLoading(true);
 
-    createColaborators({ userId: user.uid, namesArray })
+    createColaborators({ userId: user.uid, colaboratorsObject })
       .then(() => {
         hide();
         setLoading(false);
@@ -60,7 +69,7 @@ const AddColaboratorsModal = ({ visible, setVisible, user }) => {
                       key={field.key}
                       style={{ display: 'flex', marginBottom: 8 }}
                       align="start"
-                      className="form-dynamic-nest-space"
+                      className="colaborators-form-space"
                     >
                       <Form.Item
                         name={[field.name, 'name']}
@@ -81,7 +90,37 @@ const AddColaboratorsModal = ({ visible, setVisible, user }) => {
                           },
                         ]}
                       >
-                        <Input placeholder="Nombre del colaborador" />
+                        <Input placeholder="Nombre" />
+                      </Form.Item>
+                      <Form.Item
+                        name={[field.name, 'phone']}
+                        fieldKey={[field.fieldKey, 'phone']}
+                        rules={[
+                          {
+                            required: true,
+                            message: 'Ingresa el teléfono del colaborador',
+                          },
+                        ]}
+                      >
+                        <Input placeholder="Teléfono" />
+                      </Form.Item>
+                      <Form.Item
+                        name={[field.name, 'area']}
+                        fieldKey={[field.fieldKey, 'area']}
+                        rules={[
+                          {
+                            required: true,
+                            message: 'Ingresa el área del colaborador',
+                          },
+                        ]}
+                      >
+                        <Select placeholder="Área" allowClear>
+                          {areas.map((a) => (
+                            <Option key={a} value={a}>
+                              {a}
+                            </Option>
+                          ))}
+                        </Select>
                       </Form.Item>
 
                       <MinusCircleOutlined

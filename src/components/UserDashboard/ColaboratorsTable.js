@@ -58,6 +58,7 @@ const ColaboratorsTable = ({ user }) => {
         state,
         response,
         area,
+        phone,
       } = rawColaborators[name];
       return {
         key: name,
@@ -65,6 +66,7 @@ const ColaboratorsTable = ({ user }) => {
         answered: !!response,
         name,
         area,
+        phone,
         productivity,
         interest,
         light,
@@ -128,10 +130,13 @@ const ColaboratorsTable = ({ user }) => {
       width: '20%',
     },
     {
+      title: 'Teléfono',
+      dataIndex: 'phone',
+      width: '10%',
+    },
+    {
       title: 'Área',
       dataIndex: 'area',
-
-      render: (text) => <ColTag value={text} />,
       width: '10%',
     },
     {

@@ -23,20 +23,21 @@ export const createColaborator = async ({ userId, name, response, formId }) => {
     });
 };
 
-export const createColaborators = ({ userId, namesArray }) => {
-  const colaboratorsData = {};
-  namesArray.forEach((name) => {
-    colaboratorsData[`colaborators.${name}`] = {
+export const createColaborators = ({ userId, colaboratorsObject }) => {
+  const colaborators = {};
+  Object.keys(colaboratorsObject).forEach((name) => {
+    colaborators[`colaborators.${name}`] = {
       response: null,
       light: null,
       state: 'remote',
       productivity: null,
       interest: null,
       area: null,
+      ...colaboratorsObject[name],
     };
   });
 
-  return firebase.firestore().doc(`users/${userId}`).update(colaboratorsData);
+  return firebase.firestore().doc(`users/${userId}`).update(colaborators);
 };
 
 export const updateColaborator = async ({
