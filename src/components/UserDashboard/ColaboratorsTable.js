@@ -32,7 +32,7 @@ const menuUpdates = [
     ],
   },
   {
-    role: 1,
+    role: 2,
     key: 'light',
     display: 'Definir luz',
     values: [
@@ -215,7 +215,7 @@ const ColaboratorsTable = ({ user }) => {
         visible={modalVisible}
         setVisible={setModalVisible}
         user={user}
-      ></AddColaboratorsModal>
+      />
       <Table
         bordered
         size="middle"

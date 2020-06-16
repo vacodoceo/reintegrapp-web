@@ -7,7 +7,9 @@ import moment from 'moment';
 import firebase from '../../firebase';
 import { createColaborator } from '../../services/colaborators';
 import AssignColaboratorModal from './AssignColaboratorModal';
+import AddEditorsModal from './AddEditorsModal';
 import ColTag from './ColTag';
+import Loading from '../Loading';
 import ResponseDescription from './ResponseDescription';
 
 const { Link, Text } = Typography;
@@ -18,7 +20,8 @@ const FormTable = ({ user }) => {
     firebase.firestore().doc(`forms/${user.dailyFormId}`)
   );
   const [tableLoading, setTableLoading] = React.useState(false);
-  const [modalVisible, setModalVisible] = React.useState(false);
+  const [assignModalVisible, setAssignModalVisible] = React.useState(false);
+  const [editorsModalVisible, setEditorsModalVisible] = React.useState(false);
   const [response, setResponse] = React.useState(null);
   const formUrl = `https://docs.google.com/forms/d/${user.dailyFormId}`;
 
@@ -125,7 +128,7 @@ const FormTable = ({ user }) => {
             <Menu.Item
               onClick={() => {
                 setResponse(record.key);
-                setModalVisible(true);
+                setAssignModalVisible(true);
               }}
             >
               Asignar colaborador
@@ -144,24 +147,45 @@ const FormTable = ({ user }) => {
     },
   ];
 
+  const tableTitle = () => (
+    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+      <Text>
+        {'Formulario: '}
+        <Link href={formUrl} target="_blank">
+          {formUrl}
+        </Link>
+      </Text>
+      <Button
+        type="primary"
+        onClick={() => setEditorsModalVisible(true)}
+        size="small"
+      >
+        Administrar editores
+      </Button>
+    </div>
+  );
+
+  if (loading) {
+    return <Loading />;
+  }
+
   return (
     <>
+      <AddEditorsModal
+        visible={editorsModalVisible}
+        setVisible={setEditorsModalVisible}
+        form={snapshot.data()}
+        formId={snapshot.id}
+      />
       <AssignColaboratorModal
-        visible={modalVisible}
-        setVisible={setModalVisible}
+        visible={assignModalVisible}
+        setVisible={setAssignModalVisible}
         user={user}
         response={response}
         formId={user.dailyFormId}
       />
       <Table
-        title={() => (
-          <Text>
-            {'Formulario: '}
-            <Link href={formUrl} target="_blank">
-              {formUrl}
-            </Link>
-          </Text>
-        )}
+        title={tableTitle}
         bordered
         size="middle"
         columns={columns}

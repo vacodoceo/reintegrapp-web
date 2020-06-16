@@ -113,7 +113,7 @@ const OrganizationDataForm = ({ user }) => {
                     }}
                     block
                   >
-                    <PlusOutlined /> Add field
+                    <PlusOutlined /> Agregar campo
                   </Button>
                 </Form.Item>
               </div>

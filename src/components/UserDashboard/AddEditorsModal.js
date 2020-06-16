@@ -2,26 +2,28 @@ import React from 'react';
 import { Button, Form, Input, message, Modal, Space } from 'antd';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 
-import { createColaborators } from '../../services/colaborators';
+import { addEditors } from '../../services/editors';
 
-const AddColaboratorsModal = ({ visible, setVisible, user }) => {
-  const [form] = Form.useForm();
+const AddEditorsModal = ({ visible, setVisible, form, formId }) => {
+  const [modalForm] = Form.useForm();
   const [loading, setLoading] = React.useState(false);
+  const initialEditors = form.editors.map((e) => ({ email: e }));
 
-  const handleAddColaborators = ({ colaborators }) => {
-    const namesArray = colaborators.map((c) => c.name);
-    const hide = message.loading('Subiendo colaboradores...', 0);
+  const handleAddEditors = ({ editors }) => {
+    const editorsArray = editors.map((e) => e.email);
+    const hide = message.loading('Subiendo editores...', 0);
     setLoading(true);
 
-    createColaborators({ userId: user.uid, namesArray })
+    addEditors({ formId, editors: editorsArray })
       .then(() => {
         hide();
         setLoading(false);
         message.success('¡Subida exitosa!');
-        form.resetFields();
+        modalForm.resetFields();
         setVisible(false);
       })
       .catch((e) => {
+        console.log(e);
         setLoading(false);
         hide();
         message.error('Ocurrió un error al subir los colaboradores.');
@@ -29,28 +31,28 @@ const AddColaboratorsModal = ({ visible, setVisible, user }) => {
   };
 
   const onAddClick = (e) => {
-    form.submit();
+    modalForm.submit();
   };
 
   return (
     <Modal
-      title="Añadir colaboradores"
+      title="Administrar editores"
       visible={visible}
       okText="Añadir"
       onCancel={() => setVisible(false)}
       footer={
         <Button key="submit" type="primary" loading={loading} onClick={onAddClick}>
-          Añadir
+          Aceptar
         </Button>
       }
     >
       <Form
         name="basic"
-        onFinish={handleAddColaborators}
-        initialValues={{ colaborators: [{ name: '' }] }}
-        form={form}
+        onFinish={handleAddEditors}
+        initialValues={{ editors: initialEditors }}
+        form={modalForm}
       >
-        <Form.List name="colaborators">
+        <Form.List name="editors">
           {(fields, { add, remove }) => {
             return (
               <div>
@@ -63,25 +65,16 @@ const AddColaboratorsModal = ({ visible, setVisible, user }) => {
                       className="form-dynamic-nest-space"
                     >
                       <Form.Item
-                        name={[field.name, 'name']}
-                        fieldKey={[field.fieldKey, 'name']}
+                        name={[field.name, 'email']}
+                        fieldKey={[field.fieldKey, 'email']}
                         rules={[
                           {
                             required: true,
-                            message: 'Ingresa el nombre del colaborador',
-                          },
-                          {
-                            validator: (rule, value) => {
-                              if (Object.keys(user.colaborators).includes(value)) {
-                                return Promise.reject('Ese colaborador ya existe!');
-                              } else {
-                                return Promise.resolve();
-                              }
-                            },
+                            message: 'Ingresa el correo del editor',
                           },
                         ]}
                       >
-                        <Input placeholder="Nombre del colaborador" />
+                        <Input placeholder="Correo del editor" />
                       </Form.Item>
 
                       <MinusCircleOutlined
@@ -113,4 +106,4 @@ const AddColaboratorsModal = ({ visible, setVisible, user }) => {
   );
 };
 
-export default AddColaboratorsModal;
+export default AddEditorsModal;
