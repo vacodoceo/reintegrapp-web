@@ -1,18 +1,37 @@
 import React from 'react';
-import { useAuthState } from 'react-firebase-hooks/auth';
-import firebase from './firebase';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { Layout } from 'antd';
+import './App.css';
+
+import PrivateRoute from './components/PrivateRoute';
+import MyHeader from './components/Header';
+import MyFooter from './components/Footer';
+import Home from './components/Home';
+import SignIn from './components/SignIn';
+import CreateUser from './components/CreateUser';
+
+const { Content } = Layout;
 
 const App = () => {
-  const [user, loading, error] = useAuthState(firebase.auth());
-
-  console.log(user, loading, error);
-
   return (
-    <div className="App">
-      <header className="App-header">
-        <p>Test</p>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Layout className="layout">
+        <MyHeader />
+        <Content style={{ padding: '0 50px' }}>
+          <Switch>
+            <PrivateRoute component={Home} path="/" exact />
+            <PrivateRoute
+              component={CreateUser}
+              role={2}
+              path="/create-user"
+              exact
+            />
+            <Route component={SignIn} path="/sign-in" exact />
+          </Switch>
+        </Content>
+        <MyFooter />
+      </Layout>
+    </BrowserRouter>
   );
 };
 
