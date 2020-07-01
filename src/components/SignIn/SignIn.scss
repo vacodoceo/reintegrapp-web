@@ -1,0 +1,26 @@
+.form-content-center-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.site-layout-content-center-form {
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 48px;
+}
+
+.center-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+
+  button {
+    width: 100%;
+  }
+}
